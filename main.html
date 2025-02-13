@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .quiz-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #choices {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4c53af;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #1ea7cd;
+    }
+
+    #score-container {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .incorrect {
+      background-color: #f44336;
+    }
+
+    .correct {
+      background-color: #4CAF50;
+    }
+
+    #next-btn {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="quiz-container">
+    <h1>Quiz Game</h1>
+    <div id="question-container">
+      <p id="question"></p>
+      <div id="choices"></div>
+    </div>
+    <button id="next-btn" onclick="displayRandomQuestion()">Next Question</button>
+    <div id="score-container">
+      <p>Score: <span id="score">0</span></p>
+    </div>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function displayRandomQuestion() {
+      const questions = [
+      { question: "What is the capital of France?", 
+        choices: ["Berlin", "Madrid", "Paris", "Rome"], 
+        correct: 2
+      },
+        { question: "Which planet is known as the Red Planet?",
+          choices: ["Earth", "Mars", "Venus", "Jupiter"],
+          correct: 1
+        },
+        { question: "What is the largest ocean on Earth?",
+          choices: ["Atlantic", "Indian", "Arctic", "Pacific"],
+          correct: 3
+        },
+        { question: "Who painted the Mona Lisa?",
+          choices: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+          correct: 2
+        },
+        { question: "What is the boiling point of water?",
+          choices: ["90°C", "100°C", "110°C", "120°C"],
+          correct: 1
+        },
+        { question: "Who is the current president of the USA?",
+          choices: ["Joe Biden", "Donald Trump", "Barack Obama","George Bush"],
+          correct: 0
+        },
+        { question: "What is the largest country by area?",
+          choices: ["China", "Russia", "Canada", "USA"],
+          correct: 1
+        },
+        { question: "What is the square root of 64?",
+          choices: ["6", "7", "8", "9"],
+          correct: 2
+        },
+        { question: "Which element has the chemical symbol O?",
+          choices: ["Oxygen", "Osmium", "Ozone", "Opium"],
+          correct: 0
+        },
+        { question: "How many continents are there?",
+          choices: ["5", "6", "7", "8"],
+          correct: 2
+          },
+        { question: "Who wrote 'Hamlet'?",
+          choices: ["William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"],
+          correct: 0
+        },
+        { question: "Which language is primarily spoken in Brazil?",
+          choices: ["Spanish", "Portuguese", "English", "French"],
+          correct: 1
+        },
+        { question: "What is the largest planet in the Solar System?",
+          choices: ["Earth", "Mars", "Jupiter", "Saturn"],
+          correct: 2
+        },
+        { question: "Which country is known as the Land of the Rising Sun?",
+          choices: ["China", "Japan", "South Korea", "Thailand"],
+          correct: 1
+        },
+        { question: "Which animal is known for its black and white stripes?",
+          choices: ["Tiger", "Zebra", "Giraffe", "Elephant"],
+          correct: 1
+        },
+        { question: "What is the capital of Japan?",
+          choices: ["Seoul", "Beijing", "Tokyo", "Kyoto"],
+          correct: 2
+        },
+        { question: "Who discovered penicillin?",
+          choices: ["Marie Curie", "Albert Einstein", "Isaac Newton", "Alexander Fleming"],
+          correct: 3
+        },
+        { question: "What is the smallest planet in our Solar System?",
+          choices: ["Mercury", "Venus", "Mars", "Pluto"],
+          correct: 0
+        },
+        { question: "What is the hardest natural substance on Earth?",
+          choices: ["Gold", "Diamond", "Iron", "Platinum"],
+          correct: 1
+        },
+        { question: "Which ocean is the largest?",
+          choices: ["Atlantic", "Indian", "Pacific", "Arctic"],
+          correct: 2
+        },
+        { question: "Which instrument has 88 keys?",
+          choices: ["Guitar", "Violin", "Piano", "Trumpet"],
+          correct: 2
+        },
+        { question: "Which continent is the Sahara Desert located on?",
+          choices: ["Africa", "Asia", "North America", "Europe"],
+          correct: 0
+        },
+        { question: "Which element is a noble gas?",
+          choices: ["Oxygen", "Neon", "Carbon", "Nitrogen"],
+          correct: 1
+        },
+        { question: "Who invented the telephone?",
+          choices: ["Nikola Tesla", "Thomas Edison", "Alexander Graham Bell", "Benjamin Franklin"],
+          correct: 2
+        },
+        { question: "What is the longest river in the world?",
+          choices: ["Amazon", "Nile", "Yangtze", "Mississippi"],
+          correct: 1
+        },
+        { question: "Which ocean is the smallest?",
+          choices: ["Atlantic", "Indian", "Arctic", "Pacific"],
+          correct: 2
+        },
+        { question: "What is the main ingredient in guacamole?",
+          choices: ["Tomato", "Avocado", "Onion", "Garlic"],
+          correct: 1
+        },
+        { question: "What is the chemical symbol for gold?",
+          choices: ["Au", "Ag", "Pb", "Fe"],
+          correct: 0
+        },
+        { question: "Which country is famous for producing wine?",
+          choices: ["France", "Germany", "Brazil", "USA"],
+          correct: 0
+        },
+        { question: "Which sport is known as 'the king of sports'?",
+          choices: ["Football", "Tennis", "Basketball", "Baseball"],
+          correct: 0
+        },
+        { question: "Which artist painted the 'Starry Night'?",
+          choices: ["Leonardo da Vinci", "Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
+          correct: 1
+        },
+        { question: "Which planet is closest to the Sun?",
+          choices: ["Earth", "Venus", "Mercury", "Mars"],
+          correct: 2
+        },
+        { question: "Which ocean is the second largest?",
+          choices: ["Atlantic", "Indian", "Pacific", "Arctic"],
+          correct: 0
+        },
+        { question: "How many states are there in the United States?",
+          choices: ["50", "48", "52", "54"],
+          correct: 0
+        },
+        { question: "Which instrument is used to measure temperature?",
+          choices: ["Barometer", "Thermometer", "Odometer", "Tachometer"],
+          correct: 1
+        },
+        { question: "What is the largest desert in the world?",
+          choices: ["Sahara", "Gobi", "Kalahari", "Antarctic"],
+          correct: 3
+        },
+        { question: "Who is known as the father of computers?",
+          choices: ["Charles Babbage", "Alan Turing", "Bill Gates", "Steve Jobs"],
+          correct: 0
+        },
+        { question: "What is the square root of 144?",
+          choices: ["10", "11", "12", "13"],
+          correct: 2
+        },
+        { question: "Which element has the atomic number 1?",
+          choices: ["Hydrogen", "Oxygen", "Helium", "Carbon"],
+          correct: 0
+        },
+        { question: "Who was the first man on the Moon?",
+          choices: ["Buzz Aldrin", "Neil Armstrong", "Yuri Gagarin", "John Glenn"],
+          correct: 1
+        },
+        { question: "What is the smallest bone in the human body?",
+          choices: ["Stapes", "Femur", "Tibia", "Ulna"],
+          correct: 0
+        },
+        { question: "Which animal is known for its ability to change colors?",
+          choices: ["Chameleon", "Elephant", "Lion", "Giraffe"],
+          correct: 0
+        },
+        { question: "What is the longest mountain range in the world?",
+          choices: ["Himalayas", "Rockies", "Andes", "Alps"],
+          correct: 2
+        },
+        { question: "Which country is the Great Wall located in?",
+          choices: ["China", "Japan", "India", "Egypt"],
+          correct: 0
+        },
+        { question: "What is the symbol for sodium on the periodic table?",
+          choices: ["Na", "S", "So", "N"],
+          correct: 0
+        },
+      ];
+
+      // Get a random question
+      const randomIndex = Math.floor(Math.random() * questions.length);
+      const selectedQuestion = questions[randomIndex];
+
+      // Display the question text
+      document.getElementById("question").innerText = selectedQuestion.question;
+
+      // Display the choices as buttons
+      const choicesElement = document.getElementById("choices");
+      choicesElement.innerHTML = ""; // Clear previous choices
+
+      selectedQuestion.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.innerText = choice;
+
+        // Add onclick event for each button to check answer
+        button.onclick = function () {
+          const isCorrect = index === selectedQuestion.correct;
+          if (isCorrect) {
+            button.classList.add('correct');
+            score++;
+          } else {
+            button.classList.add('incorrect');
+          }
+
+          // Disable all buttons after selection
+          const buttons = choicesElement.querySelectorAll('button');
+          buttons.forEach(btn => btn.disabled = true);
+
+          // Show Next button
+          document.getElementById("next-btn").style.display = 'block';
+          
+          // Update score
+          document.getElementById("score").innerText = score;
+        };
+
+        choicesElement.appendChild(button);
+      });
+
+      // Hide the Next button initially
+      document.getElementById("next-btn").style.display = 'none';
+    }
+
+    // Initialize the first question when the page loads
+    window.onload = displayRandomQuestion;
+  </script>
+</body>
+</html>
